@@ -28,24 +28,8 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumWords()
 	{
-		//TODO: Implement this method.  See the Module 1 support videos 
-	    // if you need help.
-		/*
-		String  words = this.getText();
-		int numWords = 0;
-		
-		List<String> words = getTokens("[a-zA-Z]");
-	
-		for (String w : words) {
-			System.out.println("HEY ++++++ = " +w);
-		}
-		*/
-		/*
-		for (char c : words.toCharArray()) {
-			System.out.println("HEY HEY HEY ==== " +c);
-		}
-		*/
-		return 0;
+		List<String> numWords = getTokens("[a-zA-Z]+"); // Find contiguous sets of characters
+		return numWords.size();
 	}
 	
 	/**
@@ -59,9 +43,8 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSentences()
 	{
-	    //TODO: Implement this method.  See the Module 1 support videos 
-        // if you need help.
-        return 0;
+		List<String>  tokenized = getTokens("[^.!?]+"); // Find all characters except the sentence punctuation marks
+        return tokenized.size();
 	}
 	
 	/**
@@ -69,15 +52,19 @@ public class BasicDocument extends Document
 	 * Words are defined as above.  Syllables are defined as:
 	 * a contiguous sequence of vowels, except for a lone "e" at the 
 	 * end of a word if the word has another set of contiguous vowels, 
-	 * makes up one syllable.   y is considered a vowel.
+	 * makes up one syllable.   y is considered a vowel. 
 	 * @return The number of syllables in the document.
 	 */
 	@Override
 	public int getNumSyllables()
 	{
-	    //TODO: Implement this method.  See the Module 1 support videos 
-        // if you need help.
-        return 0;
+		int numSyllables = 0;
+		List<String> words = getTokens("[a-zA-Z]+");
+		for (int i = 0; i < words.size(); i++) {
+			numSyllables += countSyllables(words.get(i));
+		}
+		
+		return numSyllables;
 	}
 	
 	
@@ -85,30 +72,30 @@ public class BasicDocument extends Document
 	 * You are encouraged to add your own tests.  */
 	public static void main(String[] args)
 	{
-		/*
+		
 		testCase(new BasicDocument("This is a test.  How many???  "
 		        + "Senteeeeeeeeeences are here... there should be 5!  Right?"),
 				16, 13, 5);
-		*/
-		//testCase(new BasicDocument(""), 0, 0, 0);
-		/*testCase(new BasicDocument("sentence, with, lots, of, commas.!  "
+		
+		testCase(new BasicDocument(""), 0, 0, 0);
+		
+		testCase(new BasicDocument("sentence, with, lots, of, commas.!  "
 		        + "(And some poaren)).  The output is: 7.5."), 15, 11, 4);
-		 */
+		 
 		testCase(new BasicDocument("many???  Senteeeeeeeeeences are"), 6, 3, 2);
-		/*
+		
 		testCase(new BasicDocument("Here is a series of test sentences. Your program should "
 				+ "find 3 sentences, 33 words, and 49 syllables. Not every word will have "
 				+ "the correct amount of syllables (example, for example), "
 				+ "but most of them will."), 49, 33, 3);
-		*/
-		//testCase(new BasicDocument("Segue"), 2, 1, 1);
-		//testCase(new BasicDocument("Sentence"), 2, 1, 1);
-		//testCase(new BasicDocument("Sentences?!"), 3, 1, 1);
-		/*
+		
+		testCase(new BasicDocument("Segue"), 2, 1, 1);
+		
+		testCase(new BasicDocument("Sentence"), 2, 1, 1);
+		
+		testCase(new BasicDocument("Sentences?!"), 3, 1, 1);
+		
 		testCase(new BasicDocument("Lorem ipsum dolor sit amet, qui ex choro quodsi moderatius, nam dolores explicari forensibus ad."),
 		         32, 15, 1);
-		*/
-		
-		
 	}
 }

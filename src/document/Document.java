@@ -53,7 +53,26 @@ public abstract class Document {
 		// TODO: Implement this method so that you can call it from the 
 	    // getNumSyllables method in BasicDocument (module 1) and 
 	    // EfficientDocument (module 2).
-	    return 0;
+		int numSyllables = 0;
+		int numChars = word.length();
+		String[] tokens = word.split("[^aeiouy]+");
+		for (int i = 0; i < tokens.length; i++) {
+			//System.out.println("TOKEN = " +tokens[i]);
+			//System.out.println("numSyllables = " +numSyllables);
+			numSyllables += 1;
+		}
+
+		int loneE = word.split("^$e").length;
+		System.out.println("loneE = " +loneE);
+		/*
+		for (int i = 0; i < word.length(); i++) {
+			if (i == (word.length() - 1) && word.charAt(i) == 'e'){
+				System.out.println("\nFound a lone \'e\'");
+				numSyllables -= 1;
+			}
+		}
+		*/
+	    return numSyllables;
 	}
 	
 	/** A method for testing
