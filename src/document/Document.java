@@ -55,23 +55,50 @@ public abstract class Document {
 	    // EfficientDocument (module 2).
 		int numSyllables = 0;
 		int numChars = word.length();
-		String[] tokens = word.split("[^aeiouy]+");
-		for (int i = 0; i < tokens.length; i++) {
-			//System.out.println("TOKEN = " +tokens[i]);
-			//System.out.println("numSyllables = " +numSyllables);
-			numSyllables += 1;
+		//System.out.println("\nnumChars = " +numChars);
+		for (char c : word.toCharArray()) {
+			//System.out.println("c = " +c);
 		}
-
-		int loneE = word.split("^$e").length;
-		System.out.println("loneE = " +loneE);
-		/*
-		for (int i = 0; i < word.length(); i++) {
-			if (i == (word.length() - 1) && word.charAt(i) == 'e'){
-				System.out.println("\nFound a lone \'e\'");
+		// Break up word into tokens split by vowels including 'y'
+		String[] tokens = word.split("[^(aA)|(eE)|(iI)|(oO)|(uU)|(yY)]+");
+		for (int i = 0; i < tokens.length; i++) {
+			//System.out.println("tokens = " +tokens[i]);
+		}
+		// Count up the number of tokens to calculate the number of vowels
+		int token_length = tokens.length;
+		//System.out.println("TOKEN LENGTH IS " +token_length);
+		if (token_length == 1) {
+			numSyllables += 1;
+		} else if (token_length > 1){
+			for (int i = 1; i < token_length; i++) {
+				numSyllables += 1;
+			}
+		}
+		//System.out.println("numSyllables currently = " +numSyllables);
+		// Look for the lone 'e' at the end of the string
+		// If one is found then decrement the count numSyllables
+		if (word.charAt(word.length()-1) == 'e' ||
+			word.charAt(word.length()-1) == 'E') {
+			numSyllables -= 1;
+			//System.out.println("==> FOUND A LONE E");
+			// Look for a vowel at the start of the string.
+			// If one is found then increment numSyllables for
+			// words like: are, be
+			if(word.split("^[aeiou]+").length == 1) {
+				//System.out.println("\tTHIS WORD BEGINS WITH A VOWEL");
+				if(numSyllables > 1) {
+					numSyllables = 1;
+				} else {
+					numSyllables += 1;
+				}
+			}
+			// Check for syllable in other location if we find it then decrement count for words like: here, there
+			else if (word.split("[^aeiouy]").length > 0) {
+				System.out.println("\tFOUND VOWEL IN OTHER LOCATION");
 				numSyllables -= 1;
 			}
 		}
-		*/
+		//System.out.println("numSyllables = " +numSyllables);
 	    return numSyllables;
 	}
 	

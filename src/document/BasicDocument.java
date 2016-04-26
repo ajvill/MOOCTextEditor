@@ -63,7 +63,6 @@ public class BasicDocument extends Document
 		for (int i = 0; i < words.size(); i++) {
 			numSyllables += countSyllables(words.get(i));
 		}
-		
 		return numSyllables;
 	}
 	
