@@ -1,0 +1,23 @@
+# Compiled source
+ #################
+*.class
+*.out
+*.exe
+ 
+ # Logs and databases
+ ####################
+*.log
+*.sql
+*.pdf
+ 
+ # OS generated files
+ ####################
+*.swp
+.DS_Store
+.DS_Store?
+._*
+ 
+ ## Ignore files inside directory
+ # make sure to add [^.]* in .gitignore in
+ # the directories listed below.
+bin/
