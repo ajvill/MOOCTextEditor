@@ -96,5 +96,6 @@ public class BasicDocument extends Document
 		
 		testCase(new BasicDocument("Lorem ipsum dolor sit amet, qui ex choro quodsi moderatius, nam dolores explicari forensibus ad."),
 		         32, 15, 1);
+		
 	}
 }

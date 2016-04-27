@@ -48,72 +48,44 @@ public abstract class Document {
 	// You will probably NOT need to add a countWords or a countSentences method
 	// here.  The reason we put countSyllables here because we'll use it again
 	// next week when we implement the EfficientDocument class.
-	protected int countSyllables(String word)
-	{
+	protected int countSyllables(String word) {
 		int debug = 0;
-		// TODO: Implement this method so that you can call it from the 
-	    // getNumSyllables method in BasicDocument (module 1) and 
-	    // EfficientDocument (module 2).
 		int numSyllables = 0;
-		int numChars = word.length();
-		if (debug == 1 ) System.out.println("\nnumChars = " +numChars);
-		for (char c : word.toCharArray()) {
-			if (debug == 1) System.out.println("c = " +c);
-		}
 		
-		// Break up word into tokens split by vowels including 'y'.
-		// Here go through the tokens and count up
+		// Separate word into vowels to count up syllables
 		String[] tokens = word.split("[^(aA)|(eE)|(iI)|(oO)|(uU)|(yY)]+");
-		for (int i = 0; i < tokens.length; i++) {
-			if(debug == 1) System.out.println("tokens = " +tokens[i]);
-		}
-		// Count up the number of tokens to calculate the number of vowels
-		int token_length = tokens.length;
-		if (debug == 1) System.out.println("TOKEN LENGTH IS " +token_length);
-		if (token_length == 1) {
-			numSyllables += 1;
-		} else if (token_length > 1){
-			for (int i = 0; i < token_length; i++) {
-				if (!tokens[i].isEmpty())
+	
+		// Count up the numSyllables skip over null elements in the String array
+		if (debug == 1) System.out.println("\nWORD = " +word);
+		for(String t : tokens) {
+			if (debug == 1) System.out.println("TOKEN = " +t);
+			if (!t.isEmpty()) {
 				numSyllables += 1;
 			}
 		}
-		
-		if (debug == 1) System.out.println("numSyllables currently = " +numSyllables);
-		// Look for the lone 'e' at the end of the string
-		// If one is found then decrement the count numSyllables
-		if (word.charAt(word.length()-1) == 'e' ||
-			word.charAt(word.length()-1) == 'E') {
-			//if (word.charAt(word.length()-2) == 'u') {
-				
-			//} else {
-			if (!tokens[tokens.length-2].isEmpty())
+	
+		// Check for the Lone E case if we find one then just decrement the numSyllables count
+		if(word.charAt(word.length() - 1) == 'e' ||
+		   word.charAt(word.length() - 1) == 'E') {
 			numSyllables -= 1;
-			//}
-			if (debug == 1) System.out.println("==> FOUND A LONE E");
-			// Look for a vowel at the start of the string.
-			// If one is found then increment numSyllables for
-			// words like: are, be
-			String[] loneEtokens = word.split("[^aeiouy]+");
-			if(loneEtokens.length > 1) {
-				if (debug == 1) System.out.println("\tTHIS WORD BEGINS WITH A VOWEL");
-				if(numSyllables > 1) {
-					if (debug == 1) System.out.println("LONE E BUT NUMSYLLABLES = " +numSyllables);
-					//if (!loneEtokens[0].isEmpty() && numSyllables >= 2) {
-						//numSyllables += 1;
-					//}
-				} else {
-					numSyllables = 1;
-				}
+			// Make sure we don't have zero syllables for words like "be"
+			if(numSyllables == 0){
+				numSyllables = 1;
 			}
-			// Check for syllable in other location if we find it then decrement count for words like: here, there
-			else if (word.split("[^aeiouy]").length > 0) {
-				if (debug == 1) System.out.println("\tFOUND VOWEL IN OTHER LOCATION");
-				numSyllables -= 1;
-			}
+			// If we found a lone E then check the char preceding it, make sure it's not a vowel
+			// if it is then we should add back a count to numSyllables
+			else if (word.toLowerCase().charAt(word.length()-2) == 'a' 	 ||
+					 word.toLowerCase().charAt(word.length() - 2) == 'e' ||
+					 word.toLowerCase().charAt(word.length() - 2) == 'i' ||
+					 word.toLowerCase().charAt(word.length() - 2) == 'o' ||
+					 word.toLowerCase().charAt(word.length() - 2) == 'u' ||
+					 word.toLowerCase().charAt(word.length() - 2) == 'y' 
+					 ) 
+				numSyllables += 1;
 		}
+	
 		if (debug == 1) System.out.println("numSyllables = " +numSyllables);
-	    return numSyllables;
+		return numSyllables;
 	}
 	
 	/** A method for testing
