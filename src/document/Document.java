@@ -148,8 +148,12 @@ public abstract class Document {
 	/** return the Flesch readability score of this document */
 	public double getFleschScore()
 	{
-	    // TODO: Implement this method
-	    return 0.0;
+		double numWords = (double) getNumWords();
+		double numSentences = (double) getNumSentences();
+		double numSyllables = (double) getNumSyllables();
+		double fleschScore = 206.835 - (1.015 * numWords/numSentences) - (84.6 * numSyllables/numWords);
+		
+	    return fleschScore;
 	}
 	
 }
